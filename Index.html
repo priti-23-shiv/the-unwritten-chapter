@@ -1,0 +1,844 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080f29">
+
+<title>Somewhere Between Yesterday and Tomorrow</title>
+
+<style>
+:root {
+  --night: #080f29;
+  --navy: #101b3c;
+  --gold: #e8c985;
+  --cream: #fff8e9;
+  --muted: #c3c9db;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(ellipse at top, #19254b 0%, #080f29 55%);
+  color: var(--cream);
+  font-family: Georgia, "Times New Roman", serif;
+  text-align: center;
+  overflow-x: hidden;
+  line-height: 1.8;
+}
+
+button {
+  font-family: inherit;
+}
+
+section {
+  position: relative;
+  padding: 90px 22px;
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+h1, h2 {
+  font-weight: normal;
+  line-height: 1.35;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 8vw, 4.8rem);
+  color: var(--gold);
+}
+
+h2 {
+  font-size: clamp(2rem, 6vw, 3rem);
+  color: var(--gold);
+  margin-bottom: 24px;
+}
+
+p {
+  color: var(--muted);
+  max-width: 650px;
+  margin: 12px auto;
+  font-size: 1.05rem;
+}
+
+.gold {
+  color: var(--gold);
+}
+
+.eyebrow {
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  font-size: 0.72rem;
+  margin-bottom: 25px;
+}
+
+.divider {
+  width: 75px;
+  height: 1px;
+  background: var(--gold);
+  margin: 30px auto;
+}
+
+button {
+  border: 1px solid var(--gold);
+  background: transparent;
+  color: var(--gold);
+  padding: 13px 25px;
+  margin-top: 24px;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: var(--gold);
+  color: var(--night);
+  box-shadow: 0 0 25px #e8c98530;
+}
+
+button:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 5px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Opening screen */
+
+#opening {
+  min-height: 100svh;
+  padding: 35px 22px;
+  position: relative;
+}
+
+#opening::before,
+#opening::after {
+  content: "✦";
+  position: absolute;
+  color: var(--gold);
+  opacity: 0.5;
+  font-size: 1.5rem;
+}
+
+#opening::before {
+  top: 15%;
+  left: 13%;
+}
+
+#opening::after {
+  right: 13%;
+  bottom: 18%;
+}
+
+.subtitle {
+  letter-spacing: 3px;
+  font-size: 0.8rem;
+  margin-top: 22px;
+}
+
+.small-note {
+  font-size: 0.85rem;
+  margin-top: 45px;
+  opacity: 0.7;
+}
+
+/* Envelope */
+
+.envelope {
+  width: min(300px, 85vw);
+  min-height: 180px;
+  border: 1px solid #e8c98580;
+  background: linear-gradient(140deg, #152143, #0c1530);
+  padding: 30px 20px;
+  margin: 25px auto;
+  position: relative;
+  box-shadow: 0 15px 50px #0003;
+}
+
+.envelope .symbol {
+  font-size: 2.5rem;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.envelope p {
+  font-size: 0.95rem;
+}
+
+/* Cards */
+
+.card {
+  border: 1px solid #e8c98550;
+  background: #ffffff05;
+  padding: 28px 22px;
+  width: min(100%, 500px);
+  margin: 12px auto;
+  transition: 0.35s;
+}
+
+.card:hover {
+  border-color: var(--gold);
+  transform: translateY(-3px);
+}
+
+.card h3 {
+  font-weight: normal;
+  color: var(--gold);
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+
+.card p {
+  font-size: 0.97rem;
+}
+
+/* Cake */
+
+.cake {
+  font-size: 5rem;
+  margin: 10px;
+  filter: drop-shadow(0 0 20px #e8c98520);
+}
+
+.cake-message {
+  color: var(--gold);
+  min-height: 65px;
+}
+
+/* Timeline */
+
+.timeline {
+  border-left: 1px solid #e8c98570;
+  padding-left: 25px;
+  margin: 20px auto;
+  text-align: left;
+  max-width: 370px;
+}
+
+.timeline-item {
+  position: relative;
+  padding: 8px 0 24px;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--gold);
+  left: -30px;
+  top: 20px;
+}
+
+.year {
+  color: var(--gold);
+  letter-spacing: 2px;
+}
+
+/* Letter */
+
+.letter {
+  max-width: 650px;
+  border: 1px solid #e8c98570;
+  padding: clamp(25px, 6vw, 50px);
+  background: linear-gradient(145deg, #131e3d, #0b1330);
+  box-shadow: 0 15px 60px #0003;
+  text-align: left;
+  margin-top: 15px;
+}
+
+.letter h3 {
+  text-align: center;
+  font-size: 1.7rem;
+  font-weight: normal;
+  color: var(--gold);
+  margin-bottom: 25px;
+}
+
+.letter p {
+  font-size: 1rem;
+  margin: 17px 0;
+}
+
+.signature {
+  text-align: right;
+  color: var(--gold);
+  margin-top: 30px;
+}
+
+/* Secret message */
+
+.secret-box {
+  width: min(100%, 430px);
+  padding: 30px 20px;
+  border: 1px dashed #e8c98580;
+  margin-top: 15px;
+}
+
+input {
+  width: 100%;
+  max-width: 280px;
+  padding: 13px;
+  margin-top: 20px;
+  background: #080f29;
+  border: 1px solid #e8c98580;
+  color: var(--cream);
+  font-family: inherit;
+  text-align: center;
+  font-size: 1rem;
+  border-radius: 3px;
+}
+
+input:focus {
+  outline: 1px solid var(--gold);
+}
+
+#secretResult {
+  margin-top: 18px;
+  color: var(--gold);
+}
+
+/* Falling petals */
+
+.petal {
+  position: fixed;
+  top: -30px;
+  z-index: 10;
+  pointer-events: none;
+  animation: fall linear forwards;
+  opacity: 0.75;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 0.1;
+  }
+}
+
+/* Final section */
+
+#final {
+  min-height: 85vh;
+}
+
+.final-star {
+  font-size: 2rem;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+
+footer {
+  padding: 25px 15px 40px;
+  color: #a8b0c8;
+  font-size: 0.78rem;
+  letter-spacing: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- 1. OPENING -->
+
+<section id="opening">
+
+  <div class="eyebrow">An Unwritten Little Memory</div>
+
+  <h1>
+    Somewhere<br>
+    Between Yesterday<br>
+    <span class="gold">and Tomorrow</span>
+  </h1>
+
+  <div class="divider"></div>
+
+  <p class="subtitle">
+    A LITTLE SOMETHING FOR SHUBHAM
+  </p>
+
+  <p>
+    Some moments are ordinary when they begin,
+    yet become memories we want to keep.
+  </p>
+
+  <button onclick="document.getElementById('envelope').scrollIntoView({behavior:'smooth'})">
+    Begin the little journey ↓
+  </button>
+
+  <p class="small-note">
+    Made with care · October 23, 2026
+  </p>
+
+</section>
+
+
+<!-- 2. ENVELOPE -->
+
+<section id="envelope">
+
+  <div class="eyebrow">Chapter I · Something Unsaid</div>
+
+  <h2>A little envelope</h2>
+
+  <p>
+    There are some things that are easier to write
+    than to say aloud.
+  </p>
+
+  <div class="envelope">
+    <div class="symbol">✉</div>
+    <p class="gold">There's something else<br> I never told you...</p>
+  </div>
+
+  <button onclick="revealEnvelope()">
+    Open the envelope
+  </button>
+
+  <div id="envelopeMessage" class="hidden">
+    <div class="divider"></div>
+    <h2 style="font-size:2rem">Things I Admire About You 🤍</h2>
+
+    <p>
+      Not everything meaningful needs a grand explanation.
+      Sometimes, it's simply about noticing the good
+      in someone.
+    </p>
+  </div>
+
+  <button class="hidden" id="nextEnvelope"
+    onclick="document.getElementById('admire').scrollIntoView({behavior:'smooth'})">
+    Discover what's next ↓
+  </button>
+
+</section>
+
+
+<!-- 3. THINGS I ADMIRE -->
+
+<section id="admire">
+
+  <div class="eyebrow">Chapter II · The Little Things</div>
+
+  <h2>Things I Admire About You</h2>
+
+  <p>
+    Some qualities speak quietly, but they leave
+    a lasting impression.
+  </p>
+
+  <div class="card">
+    <h3>Your Kind Heart</h3>
+    <p>
+      The goodness in a person is something worth
+      appreciating. Never underestimate the value
+      of being kind.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>Your Character</h3>
+    <p>
+      The way you treat people, the respect you show,
+      and the person you choose to be matter more
+      than you may realise.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>Your Potential</h3>
+    <p>
+      You are still growing, learning, and discovering
+      yourself. You don't have to have everything
+      figured out at sixteen.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>Your Own Story</h3>
+    <p>
+      You don't need to be perfect to become someone
+      you're proud of. Keep learning, keep trying,
+      and give yourself the same patience you give others.
+    </p>
+  </div>
+
+  <button onclick="document.getElementById('birthday').scrollIntoView({behavior:'smooth'})">
+    One more thing awaits ↓
+  </button>
+
+</section>
+
+
+<!-- 4. BIRTHDAY CAKE -->
+
+<section id="birthday">
+
+  <div class="eyebrow">Chapter III · The Celebration</div>
+
+  <h2>And then, there is today...</h2>
+
+  <p>
+    October 23 isn't just another date on the calendar.
+    It's the day a new chapter of your life begins.
+  </p>
+
+  <div class="cake" aria-label="Birthday cake">🎂</div>
+
+  <h1 style="font-size:3.8rem">16</h1>
+
+  <p class="gold">Sixteen years of becoming YOU.</p>
+
+  <button onclick="celebrate()">
+    Make a little birthday wish ✨
+  </button>
+
+  <div id="cakeMessage" class="cake-message" aria-live="polite"></div>
+
+  <button onclick="document.getElementById('timeline').scrollIntoView({behavior:'smooth'})">
+    Turn the page ↓
+  </button>
+
+</section>
+
+
+<!-- 5. SIXTEEN-YEAR TIMELINE -->
+
+<section id="timeline">
+
+  <div class="eyebrow">Chapter IV · A Little Timeline</div>
+
+  <h2>23 · 10</h2>
+
+  <p>
+    Sixteen years. Countless little moments.
+    And a future that is still unwritten.
+  </p>
+
+  <div class="divider"></div>
+
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="year">23 OCTOBER 2010</div>
+      <p>
+        The beginning of a story.
+        A little life, a whole future ahead.
+      </p>
+    </div>
+
+    <div class="timeline-item">
+      <div class="year">THE YEARS IN BETWEEN</div>
+      <p>
+        Growing up, learning lessons, making memories,
+        and becoming a little more yourself each day.
+      </p>
+    </div>
+
+    <div class="timeline-item">
+      <div class="year">23 OCTOBER 2026</div>
+      <p>
+        Sixteen. Not the end of childhood's story,
+        but the beginning of another beautiful chapter.
+      </p>
+    </div>
+
+  </div>
+
+  <h2 style="font-size:1.8rem;margin-top:25px">
+    2010 → 2026
+  </h2>
+
+  <p class="gold">A whole sixteen years of your story.</p>
+
+  <button onclick="document.getElementById('secret').scrollIntoView({behavior:'smooth'})">
+    A tiny mystery awaits ↓
+  </button>
+
+</section>
+
+
+<!-- 6. SECRET CODE -->
+
+<section id="secret">
+
+  <div class="eyebrow">Chapter V · A Tiny Mystery</div>
+
+  <h2>One last little secret</h2>
+
+  <p>
+  Every little surprise needs a key.
+  This one is connected to the person
+  for whom this entire page was made.
+  </p>
+
+  <div class="secret-box">
+
+    <div class="gold" style="font-size:1.4rem">🔐</div>
+
+    <p>
+      <strong class="gold">Your clue:</strong><br>
+      Your name, followed by the age
+      you're celebrating today.
+    </p>
+
+    <form onsubmit="unlockSecret(event)">
+      <input
+        id="secretCode"
+        type="text"
+        placeholder="Enter the secret code"
+        aria-label="Secret code"
+        autocomplete="off"
+        required
+      >
+
+      <br>
+
+      <button type="submit">Unlock the message</button>
+    </form>
+
+    <div id="secretResult" aria-live="polite"></div>
+
+  </div>
+
+  <button onclick="document.getElementById('letter').scrollIntoView({behavior:'smooth'})">
+    Continue to your letter ↓
+  </button>
+
+</section>
+
+
+<!-- 7. PERSONAL BIRTHDAY LETTER -->
+
+<section id="letter">
+
+  <div class="eyebrow">Chapter VI · From the Heart</div>
+
+  <h2>A letter for you</h2>
+
+  <div class="letter">
+
+    <h3>Happy 16th Birthday, Shubham! 🤍</h3>
+
+    <p>
+      Sometimes, an unexpected meeting becomes one of
+      the nicest parts of a year. Getting to know you
+      has made this year of Class 10 a little more special.
+    </p>
+
+    <p>
+      One thing I genuinely appreciate about you is
+      your kind heart and the respectful way you treat me.
+      These little things may seem ordinary, but they
+      can mean more than words can explain.
+    </p>
+
+    <p>
+      As you turn sixteen, I hope you learn to believe
+      in yourself a little more. Don't let a difficult
+      day, a mistake, or an overthinking moment convince
+      you that you're not capable of doing good things.
+    </p>
+
+    <p>
+      You don't need to have your entire future figured
+      out right now. Take things one step at a time.
+      Keep your kindness, keep learning, and remember
+      that growing takes time.
+    </p>
+
+    <p>
+      Since this is our last year of school together,
+      I wanted to make something that could stay with
+      you as a small, happy memory of 2026.
+    </p>
+
+    <p>
+      I hope sixteen brings you good people, meaningful
+      moments, new achievements, and plenty of reasons
+      to smile.
+    </p>
+
+    <p class="signature">
+      Happy Birthday once again!<br>
+      A little surprise, made just for you. ✨
+    </p>
+
+  </div>
+
+  <button onclick="document.getElementById('final').scrollIntoView({behavior:'smooth'})">
+    There's one last page ↓
+  </button>
+
+</section>
+
+
+<!-- 8. FINAL REVEAL -->
+
+<section id="final">
+
+  <div class="final-star">✦</div>
+
+  <div class="eyebrow">The Last Page · Not The End</div>
+
+  <h2>
+    Dear Shubham,
+  </h2>
+
+  <p>
+    The world will tell you many things about who
+    you should become.
+  </p>
+
+  <p>
+    Through all the changes, remember to remain
+    someone whose kindness makes a difference.
+  </p>
+
+  <div class="divider"></div>
+
+  <h1 style="font-size:clamp(2.3rem,7vw,4rem)">
+    Keep becoming.
+  </h1>
+
+  <p>
+    Your story is still being written.
+    May the next chapter be a good one.
+  </p>
+
+  <div style="margin-top:35px;color:var(--gold);letter-spacing:3px">
+    23 · 10 · 2026
+  </div>
+
+  <p style="font-size:0.9rem;margin-top:30px">
+    Some gifts are opened once.<br>
+    Some memories can be revisited.
+  </p>
+
+  <button onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    Revisit the beginning ↑
+  </button>
+
+</section>
+
+
+<footer>
+  CREATED WITH CARE · FOR SHUBHAM'S 16TH BIRTHDAY
+  <br>
+  OCTOBER 23, 2026
+</footer>
+
+
+<script>
+
+/* Envelope reveal */
+
+function revealEnvelope() {
+  document.getElementById("envelopeMessage")
+    .classList.remove("hidden");
+
+  document.getElementById("nextEnvelope")
+    .classList.remove("hidden");
+
+  petals(12);
+}
+
+
+/* Birthday celebration */
+
+function celebrate() {
+  const message = document.getElementById("cakeMessage");
+
+  message.textContent =
+    "May you always find reasons to believe in yourself, " +
+    "dream a little bigger, and smile a little more. ✨";
+
+  petals(28);
+}
+
+
+/* Secret code */
+
+function unlockSecret(event) {
+  event.preventDefault();
+
+  const input = document.getElementById("secretCode")
+    .value.trim().toUpperCase();
+
+  const result = document.getElementById("secretResult");
+
+  if (input === "SHUBHAM16") {
+    result.innerHTML =
+      "✨ You found it! This little surprise was made " +
+      "especially for you. You matter more than you know. 🤍";
+
+    petals(20);
+
+  } else {
+    result.textContent =
+      "Not quite! Remember the clue: your name + your age.";
+  }
+}
+
+
+/* Gentle falling petals */
+
+function petals(amount) {
+  const symbols = ["✦", "✧", "❋", "✿"];
+
+  for (let i = 0; i < amount; i++) {
+    const petal = document.createElement("span");
+
+    petal.className = "petal";
+    petal.textContent =
+      symbols[Math.floor(Math.random() * symbols.length)];
+
+    petal.style.left = Math.random() * 100 + "vw";
+    petal.style.fontSize =
+      (10 + Math.random() * 13) + "px";
+
+    petal.style.color =
+      Math.random() > 0.5 ? "#e8c985" : "#fff8e9";
+
+    petal.style.animationDuration =
+      (4 + Math.random() * 5) + "s";
+
+    document.body.appendChild(petal);
+
+    setTimeout(() => petal.remove(), 9500);
+  }
+}
+
+</script>
+
+</body>
+  </html>
